@@ -1,0 +1,42 @@
+Cenário:
+Você tem as seguintes tabelas em um banco de dados:
+
+Tabela Produtos: 
+ID_Produto	Nome_Produto	Preco_Unitario
+   1	          Arroz	         15.00
+   2	          Feijão	 8.00
+   3	          Óleo	         5.00
+
+Tabela: Compras
+ID_Compra	ID_Produto	Quantidade
+    101	       1	        2 
+    102	       2	        1
+    103	       3	        3
+
+
+Questão 1:
+Escreva uma consulta SQL que retorne o valor total de cada compra. O valor total deve ser calculado multiplicando a quantidade pelo preço unitário de cada produto.
+
+select c.ID_Compra, p.Nome_Produto, c.Quantidade, (c.Quantidade * p.Preco_Unitario) as Valor_Total
+from compras c
+join Produtos p ON c.ID_Produto = p.ID_Produto
+
+
+Questão 2:
+Escreva uma consulta SQL que retorne o produto mais vendido (com maior quantidade total).
+
+select p.Nome_Produto, SUM (c.Quantidade) as Total_Vendido
+from compras c
+join Produtos p ON c.ID_produto = p.ID_Produto
+group by p.ID_produto
+order by Total_Vendido DESC
+
+
+Questão 3:
+Escreva uma consulta SQL que liste todos os produtos e o número de vezes que cada um foi comprado.
+
+select p.Nome_Produto, COUNT(c.ID_Compra) as Numero_Compras
+from produtos p
+left join Compras c ON p.ID_produto = c.ID_produto
+group by p.id_produto
+
